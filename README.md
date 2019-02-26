@@ -23,3 +23,8 @@ After cloning the repository to your local machine, you will need to setup a vir
 ## Admin Account
 
 * Run `python manage.py createsuperuser` and enter a username and password when prompted.
+
+## Run Application
+
+1. From project root run `python manage.py runserver`.
+2. Go to `http://localhost:8000/crowds` in your browser.
