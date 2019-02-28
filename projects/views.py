@@ -72,5 +72,12 @@ def create_account(request):
 		form = CreateAccountForm()
 
 	return render(request, 'projects/create-account.html', {'form': form})
+
+def delete_account(request):
+	user = request.user
+
+	user.delete()
+
+	return redirect('/projects/sign_in/')
 	
 

@@ -16,13 +16,13 @@ class SignInForm(forms.Form):
 		))
 
 class CreateAccountForm(forms.Form):
-	firstname = forms.CharField(label='Firstname', max_length=100, widget=forms.TextInput(
+	firstname = forms.CharField(label='First name', max_length=100, widget=forms.TextInput(
 			attrs={
 				'class': 'form-control',
 				'placeholder': 'First name'
 			}
 		))
-	lastname = forms.CharField(label='Lastname', max_length=100, widget=forms.TextInput(
+	lastname = forms.CharField(label='Last name', max_length=100, widget=forms.TextInput(
 			attrs={
 				'class': 'form-control',
 				'placeholder': 'Last name'
