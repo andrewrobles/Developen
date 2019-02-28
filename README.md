@@ -17,7 +17,7 @@ After cloning the repository to your local machine, you will need to setup a vir
 
 1. Download PostgreSQL (pgAdmin 4 is recommended).
 2. Create a new PostgreSQL user with username `postgres` and password `postgres`.
-3. Create a new database and give the new user access.
+3. Create a new database called `developen` and give the new user access.
 4. From project root directory run python manage.py migrate to create the database tables.
 
 ## Admin Account
@@ -27,4 +27,4 @@ After cloning the repository to your local machine, you will need to setup a vir
 ## Run Application
 
 1. From project root run `python manage.py runserver`.
-2. Go to `http://localhost:8000/crowds` in your browser.
+2. Go to `http://localhost:8000/projects/` in your browser.
