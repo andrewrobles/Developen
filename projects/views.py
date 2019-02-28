@@ -10,7 +10,7 @@ def index(request):
 	if request.user.is_authenticated:
 	    return render(request, 'projects/index.html')
 	else:
-		return redirect('/projects/sign_in/')
+		return redirect('/projects/sign-in/')
 
 def sign_in(request):
 	if request.method == 'POST':
@@ -38,7 +38,7 @@ def sign_in(request):
 def sign_out(request):
 	logout(request)
 
-	return redirect('/projects/sign_in/')
+	return redirect('/projects/sign-in/')
 
 def create_account(request):
 	if request.method == 'POST':
@@ -78,6 +78,6 @@ def delete_account(request):
 
 	user.delete()
 
-	return redirect('/projects/sign_in/')
+	return redirect('/projects/sign-in/')
 	
 
