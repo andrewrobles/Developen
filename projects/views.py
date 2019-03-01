@@ -1,14 +1,21 @@
 from django.shortcuts import render
 
-from .forms import SignInForm, CreateAccountForm
+from .forms import SignInForm, CreateAccountForm, CreateProjectForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
+from projects.models import Project
 from django.contrib.auth.models import User
 
 def index(request):
-	if request.user.is_authenticated:
-	    return render(request, 'projects/index.html')
+	user = request.user
+
+	if user.is_authenticated:
+		project_list = Project.objects.filter(user=user)
+		context = {
+			'project_list': project_list
+		}
+		return render(request, 'projects/index.html', context)
 	else:
 		return redirect('/projects/sign-in/')
 
@@ -79,5 +86,23 @@ def delete_account(request):
 	user.delete()
 
 	return redirect('/projects/sign-in/')
+
+def create_project(request):
+	if request.method == 'POST':
+		form = CreateProjectForm(request.POST)
+
+		if form.is_valid():
+			name = form.cleaned_data['name']
+			user = request.user
+
+			p = Project(name=name, user=user)
+
+			p.save()
+
+			return redirect('/projects/')
+	else:
+		form = CreateProjectForm()
+
+	return render(request, 'projects/create-project.html', {'form': form})	
 	
 

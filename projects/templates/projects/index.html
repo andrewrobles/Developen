@@ -7,12 +7,23 @@
 	</head>
 	<body>
 			<div style="padding-bottom: 5px;">
-				<a class="btn btn-primary" href="/projects/sign-out/" role="button">Sign Out</a>
+				{% if project_list %}
+				    {% for project in project_list %}
+				        <h5>{{ project.name }}</h5>
+				    {% endfor %}
+				{% else %}
+				    <p>No projects are available.</p>
+				{% endif %}
+			</div>
+			<div style="padding-bottom: 5px;">
+				<a class="btn btn-primary" href="/projects/create/" role="button">New Project</a>
+			</div>
+			<div style="padding-bottom: 5px;">
+				<a class="btn btn-secondary" href="/projects/sign-out/" role="button">Sign Out</a>
 			</div>
 	  		<div>
 	  			<a class="btn btn-danger" href="/projects/delete-account/" role="button">Delete Account</a>
 	  		</div>
-			
 	</body>
 </html>
 

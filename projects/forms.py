@@ -41,3 +41,11 @@ class CreateAccountForm(forms.Form):
 				'type':'password'
 			}
 		))
+
+class CreateProjectForm(forms.Form):
+	name = forms.CharField(label='Name', max_length=100, widget=forms.TextInput(
+		attrs={
+			'class': 'form-control',
+			'placeholder': 'Name'
+		}
+	))
