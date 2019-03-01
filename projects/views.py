@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .forms import SignInForm, CreateAccountForm, CreateProjectForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from django.http import Http404
 
 from projects.models import Project
 from django.contrib.auth.models import User
@@ -105,4 +106,28 @@ def create_project(request):
 
 	return render(request, 'projects/create-project.html', {'form': form})	
 	
+def delete_project(request, project_id):
+	try:
+		project = Project.objects.get(pk=project_id)
+	except Project.DoesNotExist:
+		raise Http404("Project does not exist")
+	
+	project.delete()
+	
+	return redirect('/projects/')
+
+def project_detail(request, project_id):
+	try:
+		project = Project.objects.get(pk=project_id)
+	except Project.DoesNotExist:
+		raise Http404("Project does not exist")
+
+	context = {
+		'project': project
+	}
+
+	return render(request, 'projects/project-detail.html', context)
+
+	
+
 
