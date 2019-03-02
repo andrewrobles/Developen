@@ -128,6 +128,9 @@ def project_detail(request, project_id):
 
 	return render(request, 'projects/project-detail.html', context)
 
+def home(request):
+	return render(request, 'projects/home.html')
+
 	
 
 
