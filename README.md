@@ -29,8 +29,8 @@ After cloning the repository to your local machine, you will need to setup a vir
 ## Run Application
 
 1. From project root run `python manage.py runserver`.
-2. Go to `http://localhost:8000/projects/` in your browser to view the Developen applicaion.
-3. The administrator interface is viewable at `http://localhost:8000/admin/`
+2. Go to `http://localhost:8000/projects/` in your browser to view the Developen application.
+3. The administrator interface is viewable at `http://localhost:8000/admin/`.
 
 ## Development Practices
 
