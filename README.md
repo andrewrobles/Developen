@@ -20,7 +20,7 @@ After cloning the repository to your local machine, you will need to setup a vir
 3. Launch pgAdmin 4.
 4. Create a new server with a descriptive title.
 5. Create a new database called `developen` and give the `postgres` user access.
-6. From project root directory `run python manage.py migrate` to create the database tables.
+6. From project root directory run `python manage.py migrate` to create the database tables.
 
 ## Admin Account
 
@@ -29,9 +29,10 @@ After cloning the repository to your local machine, you will need to setup a vir
 ## Run Application
 
 1. From project root run `python manage.py runserver`.
-2. Go to `http://localhost:8000/projects/` in your browser.
+2. Go to `http://localhost:8000/projects/` in your browser to view the Developen applicaion.
+3. The administrator interface is viewable at `http://localhost:8000/admin/`
 
 ## Development Practices
 
 1. Always make sure your virtual environment is running before you start developing or run your application.
-2. You should be committing your migration files as they are.
+2. You should be committing your migration files whenever they are created by the `python manage.py migrate` command.
