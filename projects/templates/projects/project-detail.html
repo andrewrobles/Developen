@@ -7,7 +7,12 @@
 	</head>
 	<body>
 	  		<div>
-	  			<a class="btn btn-danger" href="/projects/{{project.id}}/delete/" role="button">Delete Project</a>
+	  			<div style="padding-bottom: 5px;">
+					<a class="btn btn-primary" href="/projects/{{project.id}}/tasks/create" role="button">New Task</a>
+				</div>
+	  			<div">
+	  				<a class="btn btn-danger" href="/projects/{{project.id}}/delete/" role="button">Delete Project</a>
+	  			</div>
 	  		</div>
 	</body>
 </html>

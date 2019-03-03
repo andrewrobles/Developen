@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from .forms import SignInForm, CreateAccountForm, CreateProjectForm
+from .forms import SignInForm, CreateAccountForm, CreateProjectForm, CreateTaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import Http404
 
-from projects.models import Project
+from projects.models import Project, Task
 from django.contrib.auth.models import User
 
 def index(request):
@@ -96,9 +96,9 @@ def create_project(request):
 			name = form.cleaned_data['name']
 			user = request.user
 
-			p = Project(name=name, user=user)
+			new_project = Project(name=name, user=user)
 
-			p.save()
+			new_project.save()
 
 			return redirect('/projects/')
 	else:
@@ -130,6 +130,29 @@ def project_detail(request, project_id):
 
 def home(request):
 	return render(request, 'projects/home.html')
+
+def create_task(request, project_id):
+	if request.method == 'POST':
+		form = CreateTaskForm(request.POST)
+
+		if form.is_valid():
+			name = form.cleaned_data['name']
+			project = Project.objects.get(pk=project_id)
+
+			new_task = Task(name=name, project=project)
+
+			new_task.save()
+
+			return redirect('/projects/' + str(project_id) + '/detail/')
+
+	else:
+		form = CreateTaskForm()
+
+	return render(request, 'projects/create-task.html', {'form': form})
+
+
+
+
 
 	
 
