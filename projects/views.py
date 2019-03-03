@@ -150,12 +150,46 @@ def create_task(request, project_id):
 
 			new_task.save()
 
-			return redirect('/projects/' + str(project_id) + '/detail/')
+			return redirect('/projects/' + str(project_id))
 
 	else:
 		form = CreateTaskForm()
 
 	return render(request, 'projects/create-task.html', {'form': form})
+
+def delete_task(request, project_id, task_id):
+	user = request.user
+	if user.is_authenticated:
+		try:
+			task = Task.objects.get(pk=task_id)
+		except Task.DoesNotExist:
+			raise Http404("Task does not exist")
+		
+		task.delete()
+		
+		return redirect('/projects/' + str(project_id))
+	else:
+		return redirect('/projects/sign-in')
+
+
+def task_detail(request, project_id, task_id):
+	user = request.user
+	if user.is_authenticated:
+		try:
+			project = Project.objects.get(pk=project_id)
+		except Project.DoesNotExist:
+			raise Http404("Project does not exist")
+
+		task = Task.objects.get(pk=task_id)
+
+		context = {
+			'project' : project,
+			'task': task
+		}
+
+		return render(request, 'projects/task-detail.html', context)
+	else:
+		return redirect('/projects/sign-in/')
 
 
 
