@@ -33,7 +33,7 @@ def sign_in(request):
 			if user is not None:
 				login(request, user)
 
-				return redirect('/projects/')
+				return redirect('/projects/home/')
 
 			else:
 				form = SignInForm()
@@ -46,7 +46,7 @@ def sign_in(request):
 def sign_out(request):
 	logout(request)
 
-	return redirect('/projects/sign-in/')
+	return redirect('/projects/home/')
 
 def create_account(request):
 	if request.method == 'POST':
@@ -129,7 +129,9 @@ def project_detail(request, project_id):
 	return render(request, 'projects/project-detail.html', context)
 
 def home(request):
-	return render(request, 'projects/home.html')
+	userStatus = request.user.is_authenticated
+
+	return render(request, 'projects/home.html', {'userStatus': userStatus})
 
 	
 
