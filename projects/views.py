@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from .forms import SignInForm, CreateAccountForm, CreateProjectForm
+from .forms import SignInForm, CreateAccountForm, CreateProjectForm, CreateTaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import Http404
 
-from projects.models import Project
+from projects.models import Project, Task
 from django.contrib.auth.models import User
 
 def index(request):
@@ -96,9 +96,9 @@ def create_project(request):
 			name = form.cleaned_data['name']
 			user = request.user
 
-			p = Project(name=name, user=user)
+			new_project = Project(name=name, user=user)
 
-			p.save()
+			new_project.save()
 
 			return redirect('/projects/')
 	else:
@@ -117,21 +117,85 @@ def delete_project(request, project_id):
 	return redirect('/projects/')
 
 def project_detail(request, project_id):
-	try:
-		project = Project.objects.get(pk=project_id)
-	except Project.DoesNotExist:
-		raise Http404("Project does not exist")
+	user = request.user
+	if user.is_authenticated:
+		try:
+			project = Project.objects.get(pk=project_id)
+		except Project.DoesNotExist:
+			raise Http404("Project does not exist")
 
-	context = {
-		'project': project
-	}
+		task_list = Task.objects.filter(project=project)
 
-	return render(request, 'projects/project-detail.html', context)
+		context = {
+			'project' : project,
+			'task_list': task_list
+		}
+
+		return render(request, 'projects/project-detail.html', context)
+	else:
+		return redirect('/projects/sign-in/')
 
 def home(request):
 	userStatus = request.user.is_authenticated
 
 	return render(request, 'projects/home.html', {'userStatus': userStatus})
+
+def create_task(request, project_id):
+	if request.method == 'POST':
+		form = CreateTaskForm(request.POST)
+
+		if form.is_valid():
+			name = form.cleaned_data['name']
+			project = Project.objects.get(pk=project_id)
+
+			new_task = Task(name=name, project=project)
+
+			new_task.save()
+
+			return redirect('/projects/' + str(project_id))
+
+	else:
+		form = CreateTaskForm()
+
+	return render(request, 'projects/create-task.html', {'form': form})
+
+def delete_task(request, project_id, task_id):
+	user = request.user
+	if user.is_authenticated:
+		try:
+			task = Task.objects.get(pk=task_id)
+		except Task.DoesNotExist:
+			raise Http404("Task does not exist")
+		
+		task.delete()
+		
+		return redirect('/projects/' + str(project_id))
+	else:
+		return redirect('/projects/sign-in')
+
+
+def task_detail(request, project_id, task_id):
+	user = request.user
+	if user.is_authenticated:
+		try:
+			project = Project.objects.get(pk=project_id)
+		except Project.DoesNotExist:
+			raise Http404("Project does not exist")
+
+		task = Task.objects.get(pk=task_id)
+
+		context = {
+			'project' : project,
+			'task': task
+		}
+
+		return render(request, 'projects/task-detail.html', context)
+	else:
+		return redirect('/projects/sign-in/')
+
+
+
+
 
 	
 
