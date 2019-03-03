@@ -117,16 +117,23 @@ def delete_project(request, project_id):
 	return redirect('/projects/')
 
 def project_detail(request, project_id):
-	try:
-		project = Project.objects.get(pk=project_id)
-	except Project.DoesNotExist:
-		raise Http404("Project does not exist")
+	user = request.user
+	if user.is_authenticated:
+		try:
+			project = Project.objects.get(pk=project_id)
+		except Project.DoesNotExist:
+			raise Http404("Project does not exist")
 
-	context = {
-		'project': project
-	}
+		task_list = Task.objects.filter(project=project)
 
-	return render(request, 'projects/project-detail.html', context)
+		context = {
+			'project' : project,
+			'task_list': task_list
+		}
+
+		return render(request, 'projects/project-detail.html', context)
+	else:
+		return redirect('/projects/sign-in/')
 
 def home(request):
 	return render(request, 'projects/home.html')
