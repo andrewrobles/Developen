@@ -1,5 +1,7 @@
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
+from projects.models import Project
+
 from django.test import TestCase, RequestFactory
 
 from .views import delete_account
@@ -30,7 +32,24 @@ class UserAccountTests(TestCase):
 		delete_account(request)
 		user_list = User.objects.filter(username='oskibear')
 
-		self.assertEqual(len(user_list), 0) 
+		self.assertEqual(len(user_list), 0)		
+
+	def test_unauthenticated_user_cannot_create_project(self):
+		create_project_form_data = {
+			'name': 'Developen', 
+		}
+
+		self.client.post('/projects/create-account/', create_project_form_data)
+
+		project_list = Project.objects.all()
+
+		self.assertEqual(len(project_list), 0)
+
+
+
+
+
+
 
 
 
