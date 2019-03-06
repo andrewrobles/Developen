@@ -77,10 +77,11 @@ WSGI_APPLICATION = 'developen.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'developen',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'PORT': '5432',
+        'NAME': 'DevelopenDB',
+        'USER': 'DevelopenUser',
+        'PASSWORD': ')(Open*&Development^%',
+        'HOST': 'andrewrobles-1076.postgres.pythonanywhere-services.com',
+        'PORT': '11076',
     }
 }
 
